@@ -1,2 +1,2 @@
 # ML-for-classification
-Trained machine learning models for a classification problem
+Trained machine learning models for classification problems
