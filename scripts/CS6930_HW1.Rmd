@@ -1,0 +1,538 @@
+---
+title: "DM_HW1"
+author: "Youfei Zhang"
+output:
+html_document: default
+pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir = '/Users/Scarlet/Desktop/code/CISC6930_DM/hw/hw1')
+```
+
+```{r "source", include=FALSE}
+source("/Users/Scarlet/Desktop/code/CISC6930_DM/hw/hw1")
+```
+
+## Question 1: L2 linear regression 
+Implement L2 regularized linear regression algorithm with lambda ranging from 0 to 150 (integers only). For each of the 6 dataset, plot both the training set MSE and the test set MSE as a function of lambda (x-axis) in one graph.
+
+```{r}
+## prepare packages
+require(knitr)
+require(glmnet)
+library(dplyr)
+library(tidyr)
+
+## standardize scientific notations
+options(scipen = 999)
+
+## define lambda 
+lambdas = (seq(0:150))
+```
+
+for dataset 1: train-100-10.csv, test-100-10.csv: 
+
+```{r}
+## set up working directory
+setwd("/Users/Scarlet/Desktop/code/CISC6930_DM/hw/hw1")
+
+## prepare data 
+train1 = read.csv(file = "/Users/Scarlet/Desktop/code/CISC6930_DM/hw/hw1/train-100-10.csv", sep = ",")
+test1 = read.csv(file = "/Users/Scarlet/Desktop/code/CISC6930_DM/hw/hw1/test-100-10.csv", sep = ",")
+
+```
+
+```{r}
+## define features and response for training and testing sets
+x.train1 = model.matrix(y~.-1, data = train1)
+y.train1 = train1$y
+x.test1 = model.matrix(y~.-1, data = test1)
+y.test1 = test1$y
+```
+
+```{r}
+## define the range of lambdas
+lambdas = (seq(0:150))
+
+## train ridge model on train-100-10 data with alpha = 0 
+fit.ridge1 = glmnet(x.train1, y.train1, alpha = 0, lambda = lambdas)
+
+## train the model on training data to compute training MSE
+pred.tr1 = predict(fit.ridge1, x.train1)
+mse.tr1 = apply((pred.tr1 - y.train1)^2, 2, mean) # column-wised 
+
+## train the model on testing data to compute testing MSE
+pred.test1 = predict(fit.ridge1, x.test1)
+mse.test1 = apply((y.test1 - pred.test1)^2, 2, mean)
+
+## plot training and testing MSE as a function of lambda 
+par(mar = c(5,4,4,4))
+plot(log(fit.ridge1$lambda), mse.tr1, type = "l", col = "red", xlab = "Log(lambda)", ylab = "MSE", main = "dataset1: 100-10")
+mtext("Train MSE",side = 2,line = 2,col = 2)
+par(new = TRUE)
+plot(log(fit.ridge1$lambda), mse.test1, type = 'l', axes = F, col = "blue", xlab = " ", ylab = " ")
+axis(side = 4)
+mtext("Test MSE",side = 4,line = 2,col = 4)
+
+```
+
+for dataset 2: train-100-100.csv, test-100-100.csv
+
+```{r}
+## repeat the same steps for dataset 2: 100-100
+train2 = read.csv('/Users/Scarlet/Desktop/code/CISC6930_DM/hw/hw1/train-100-100.csv', header = TRUE, sep = ",")
+test2 = read.csv("/Users/Scarlet/Desktop/code/CISC6930_DM/hw/hw1/test-100-100.csv", header = TRUE, sep = ",")
+
+x.train2 = model.matrix(y~.-1, data = train2)
+y.train2 = train2$y
+x.test2 = model.matrix(y~.-1, data = test2)
+y.test2 = test2$y
+
+lambdas = (seq(0:150))
+fit.ridge2 = glmnet(x.train2, y.train2, alpha = 0, lambda = lambdas)
+
+pred.tr2 = predict(fit.ridge2, x.train2)
+mse.tr2 = apply((pred.tr2 - y.train2)^2, 2, mean) # column-wised 
+
+pred.test2 = predict(fit.ridge2, x.test2)
+mse.test2 = apply((y.test2 - pred.test2)^2, 2, mean)
+
+par(mar = c(5,4,4,4))
+plot(log(fit.ridge2$lambda), mse.tr2, type = "l", col = "red", xlab = "Log(lambda)", ylab = "MSE", main = "dataset2: 100-100")
+mtext("Train MSE",side = 2,line = 2,col = 2)
+par(new = TRUE)
+plot(log(fit.ridge2$lambda), mse.test2, type = 'l', axes = F, col = "blue", xlab = " ", ylab = " ")
+axis(side = 4)
+mtext("Test MSE",side = 4,line = 2,col = 4)
+
+```
+
+for dataset 3: train-1000-100.csv, test-1000-100.csv
+
+```{r}
+## repeat the same steps for dataset 3: 1000-100
+train3 = read.csv('/Users/Scarlet/Desktop/code/CISC6930_DM/hw/hw1/train-1000-100.csv', header = TRUE, sep = ",")
+test3 = read.csv('/Users/Scarlet/Desktop/code/CISC6930_DM/hw/hw1/test-1000-100.csv', header = TRUE, sep = ",")
+
+x.train3 = model.matrix(y~.-1, data = train3)
+y.train3 = train3$y
+x.test3 = model.matrix(y~.-1, data = test3)
+y.test3 = test3$y
+
+lambdas = (seq(0:150))
+fit.ridge3 = glmnet(x.train3, y.train3, alpha = 0, lambda = lambdas)
+
+pred.tr3 = predict(fit.ridge3, x.train3)
+mse.tr3 = apply((pred.tr3 - y.train3)^2, 2, mean) # column-wised 
+
+pred.test3 = predict(fit.ridge3, x.test3)
+mse.test3 = apply((y.test3 - pred.test3)^2, 2, mean)
+
+par(mar = c(5,4,4,4))
+plot(log(fit.ridge3$lambda), mse.tr3, type = "l", col = "red", xlab = "Log(lambda)", ylab = "MSE", main = "dataset3: 1000-100")
+mtext("Train MSE",side = 2,line = 2,col = 2)
+par(new = TRUE)
+plot(log(fit.ridge3$lambda), mse.test3, type = 'l', axes = F, col = "blue", xlab = " ", ylab = " ")
+axis(side = 4)
+mtext("Test MSE",side = 4,line = 2,col = 4)
+```
+
+Taking the first 50, 100, and 150 instances of 1000-100
+```{r}
+## for train-1000-100.csv: 
+## taking the first 50, 100, and 150 instances
+train3_50 = train3[0:50,]
+train3_100 = train3[0:100,]
+train3_150 = train3[0:150,]
+```
+
+```{r}
+## for dataset 3: 50 instances
+
+x.train3_50 = model.matrix(y~.-1, data = train3_50)
+y.train3_50 = train3_50$y
+
+fit.ridge3_50 = glmnet(x.train3_50, y.train3_50, alpha = 0, lambda = lambdas)
+
+pred.tr3_50 = predict(fit.ridge3_50, x.train3_50)
+mse.tr3_50 = apply((pred.tr3_50 - y.train3_50)^2, 2, mean)
+
+pred.test3_50 = predict(fit.ridge3_50, x.test3)
+mse.test3_50 = apply((pred.test3_50 - y.test3)^2, 2, mean)
+
+par(mar = c(5,4,4,4))
+plot(log(fit.ridge3_50$lambda), mse.tr3_50, type = "l", col = "red", xlab = "Log(lambda)", ylab = "MSE", main = "dataset3: 1000-10 - first 50")
+mtext("Train MSE",side = 2,line = 2,col = 2)
+par(new = TRUE)
+plot(log(fit.ridge3_50$lambda), mse.test3_50, type = 'l', axes = F, col = "blue", xlab = " ", ylab = " ")
+axis(side = 4)
+mtext("Test MSE",side = 4,line = 2,col = 4)
+```
+
+```{r}
+## for dataset 3: 100 instances
+
+x.train3_100 = model.matrix(y~.-1, data = train3_100)
+y.train3_100 = train3_100$y
+
+fit.ridge3_100 = glmnet(x.train3_100, y.train3_100, alpha = 0, lambda = lambdas)
+
+pred.tr3_100 = predict(fit.ridge3_100, x.train3_100)
+mse.tr3_100 = apply((pred.tr3_100 - y.train3_100)^2, 2, mean)
+
+pred.test3_100 = predict(fit.ridge3_100, x.test3)
+mse.test3_100 = apply((pred.test3_100 - y.test3)^2, 2, mean)
+
+par(mar = c(5,4,4,4))
+plot(log(fit.ridge3_100$lambda), mse.tr3_100, type = "l", col = "red", xlab = "Log(lambda)", ylab = "MSE", main = "dataset3: 1000-10 - first 100")
+mtext("Train MSE",side = 2,line = 2,col = 2)
+par(new = TRUE)
+plot(log(fit.ridge3_100$lambda), mse.test3_100, type = 'l', axes = F, col = "blue", xlab = " ", ylab = " ")
+axis(side = 4)
+mtext("Test MSE",side = 4,line = 2,col = 4)
+```
+
+```{r}
+## for dataset 3: 150 instances
+
+x.train3_150 = model.matrix(y~.-1, data = train3_150)
+y.train3_150 = train3_150$y
+
+fit.ridge3_150 = glmnet(x.train3_150, y.train3_150, alpha = 0, lambda = lambdas)
+
+pred.tr3_150 = predict(fit.ridge3_150, x.train3_150)
+mse.tr3_150 = apply((pred.tr3_150 - y.train3_150)^2, 2, mean)
+
+pred.test3_150 = predict(fit.ridge3_150, x.test3)
+mse.test3_150 = apply((pred.test3_150 - y.test3)^2, 2, mean)
+
+par(mar = c(5,4,4,4))
+plot(log(fit.ridge3_150$lambda), mse.tr3_150, type = "l", col = "red", xlab = "Log(lambda)", ylab = "MSE", main = "dataset3: 1000-10 - first 150")
+mtext("Train MSE",side = 2,line = 2,col = 2)
+par(new = TRUE)
+plot(log(fit.ridge3_150$lambda), mse.test3_150, type = 'l', axes = F, col = "blue", xlab = " ", ylab = " ")
+axis(side = 4)
+mtext("Test MSE",side = 4,line = 2,col = 4)
+
+```
+
+(a) For each dataset, which lambda value gives the least test set MSE?
+
+```{r}
+## for dataset 1: train-100-10.csv, test-100-10.csv
+opt_lambda_1 = fit.ridge1$lambda[order(mse.test1)[1]] ## put in ascending order
+opt_lambda_1
+# coef(fit.ridge1, s = opt_lambda_1)
+```
+
+Answer: lambda = 3 gives the least set MSE
+
+```{r}
+## for dataset 2: train-100-100.csv, test-100-100.csv
+opt_lambda_2 = fit.ridge2$lambda[order(mse.test2)[1]]
+opt_lambda_2 
+# coef(fit.ridge2, s = opt_lambda_2)
+
+```
+
+Answer: lambda = 7 gives the least set MSE
+
+```{r}
+## for dataset 3: train-1000-100.csv, test-1000-100.csv
+opt_lambda_3 = fit.ridge3$lambda[order(mse.test3)[1]]
+opt_lambda_3 
+# coef(fit.ridge3, s = opt_lambda_3)
+```
+
+Answer: lambda = 1 gives the least set MSE
+
+```{r}
+## for dataset 3: 50 instances
+opt_lambda_3_50 = fit.ridge3_50$lambda[order(mse.test3_50)[1]]
+opt_lambda_3_50 
+# coef(fit.ridge3_50, s = opt_lambda_3_50)
+
+```
+
+Answer: lambda = 14 gives the least set MSE
+
+```{r}
+opt_lambda_3_100 = fit.ridge3_100$lambda[order(mse.test3_100)[1]]
+opt_lambda_3_100 
+# coef(fit.ridge3_100, s = opt_lambda_3_100)
+```
+
+Answer: lambda = 8 gives the least set MSE
+
+```{r}
+## for dataset 3: 150 instances
+opt_lambda_3_150 = fit.ridge3_150$lambda[order(mse.test3_150)[1]]
+opt_lambda_3_150 
+# coef(fit.ridge3_150, s = opt_lambda_3_150)
+```
+
+Answer: lambda = 4 gives the least set MSE
+
+(b) For each of datasets 100-100, 50(1000)-100, 100(1000)-100, provide an additional graph with lambda ranging from 1 to 150.
+
+```{r}
+## draw a plot of coefficients
+# par(mfrow = c(3,1))
+
+## for dataset2: 100-100
+plot(fit.ridge2, xvar = "lambda", label = TRUE)
+
+## for dataset3: 50(1000)-100
+plot(fit.ridge3_50, xvar = "lambda", label = TRUE)
+
+## for dataset3: 100(1000)-100
+plot(fit.ridge3_100, xvar = "lambda", label = TRUE)
+```
+
+(c) Explain why lambda = 0 (i.e., no regularization) gives abnormally large MSEs for those three datasets in (b).
+
+Answer: 
+When lambda - 0, ridge regression is the same as a full ordinary least squares, 
+all the parameters are fit into the model without any penality, 
+which leads to the the largest MSE given its a full model.
+
+
+## Question 2: 
+
+From the plots in question 1, we can tell which value of lambda is best for each dataset once we know the test data and its labels. This is not realistic in real world applications. In this part, we use cross validation (CV) to set the value for lambda. Implement the 10-fold CV technique discussed in class (pseudo code given in Appendix A) to select the best lambda value from the training set.
+
+(a) Using CV technique, what is the best choice of lambda value and the corresponding test set MSE for each of the six datasets?
+
+```{r}
+## set seed for reproducibility 
+set.seed(10)
+
+## define lambda 
+lambdas = (seq(0:150))
+```
+
+```{r}
+## for dataset 1: train-100-10.csv, test-100-10.csv
+cv.ridge1 = cv.glmnet(x.train1, y.train1, alpha = 0, lambda = lambdas)
+plot(cv.ridge1)
+```
+
+```{r}
+cv_opt_lambda1 = cv.ridge1$lambda.min
+cv_opt_lambda1
+cv.mse.min1 <- cv.ridge1$cvm[cv.ridge1$lambda == cv.ridge1$lambda.min]
+cv.mse.min1
+```
+
+Answer: For dataset1, the best choice of lambda is 3, the corresponding test set MSE is 6.379688
+
+```{r}
+## for dataset 2: train-100-100.csv, test-100-100.csv
+cv.ridge2 = cv.glmnet(x.train2, y.train2, alpha = 0, lambda = lambdas)
+plot(cv.ridge2)
+```
+
+```{r}
+cv_opt_lambda2 = cv.ridge2$lambda.min
+cv_opt_lambda2 
+cv.mse.min2 <- cv.ridge2$cvm[cv.ridge2$lambda == cv.ridge2$lambda.min]
+cv.mse.min2 
+```
+
+Answer: For dataset2, the best choice of lambda is 1, the corresponding test set MSE is 5.108456
+
+```{r}
+## for dataset 3: train-1000-100.csv, test-1000-100.csv
+cv.ridge3 = cv.glmnet(x.train3, y.train3, alpha = 0, lambda = lambdas)
+plot(cv.ridge3)
+```
+
+```{r}
+cv_opt_lambda3 = cv.ridge3$lambda.min
+cv_opt_lambda3 
+cv.mse.min3 <- cv.ridge3$cvm[cv.ridge3$lambda == cv.ridge3$lambda.min]
+cv.mse.min3 
+```
+Answer: For dataset3, the best choice of lambda is 1, the corresponding test set MSE is 6.400667
+
+```{r}
+## for dataset 3: 50 instances
+cv.ridge3_50 = cv.glmnet(x.train3_50, y.train3_50, alpha = 0, lambda = lambdas)
+plot(cv.ridge3_50)
+```
+
+```{r}
+cv_opt_lambda3_50 = cv.ridge3_50$lambda.min
+cv_opt_lambda3_50 
+cv.mse.min3_50 <- cv.ridge3_50$cvm[cv.ridge3_50$lambda == cv.ridge3_50$lambda.min]
+cv.mse.min3_50 
+```
+
+Answer: For dataset3_50, the best choice of lambda is 28, the corresponding test set MSE is 8.801843
+
+```{r}
+## for dataset 3: 100 instances
+cv.ridge3_100 = cv.glmnet(x.train3_100, y.train3_100, alpha = 0, lambda = lambdas)
+plot(cv.ridge3_100)
+```
+
+```{r}
+cv_opt_lambda3_100 = cv.ridge3_100$lambda.min
+cv_opt_lambda3_100
+cv.mse.min3_100 <- cv.ridge3_100$cvm[cv.ridge3_100$lambda == cv.ridge3_100$lambda.min]
+cv.mse.min3_100 
+```
+
+Answer: For dataset3 with 100 instances, the best choice of lambda is 10, the corresponding test set MSE is 7.694521
+
+```{r}
+## for dataset 3: 150 instances
+cv.ridge3_150 = cv.glmnet(x.train3_150, y.train3_150, alpha = 0, lambda = lambdas)
+plot(cv.ridge3_150)
+```
+
+```{r}
+cv_opt_lambda3_150 = cv.ridge3_150$lambda.min
+cv_opt_lambda3_150 
+cv.mse.min3_150 <- cv.ridge3_150$cvm[cv.ridge3_150$lambda == cv.ridge3_150$lambda.min]
+cv.mse.min3_150 
+```
+
+Answer: For dataset3 with 150 instances, the best choice of lambda is 11, the corresponding test set MSE is 8.067179
+
+(b) How do the values for lambda and MSE obtained from CV compare to the choice of lambda and MSE in question 1(a)?
+
+Answer: 
+The choice of lamda and MSE in question 1(a) is fixed, while the choice from CV varies everytime when we redo the CV. 
+Sometimes the MSE obtained from CV is larger than the MSE in question 1(a)
+But overall, the choice of lambda and MSE obtained from CV is not too far away from the ones obtained in question 1(a)
+
+(c) What are the drawbacks of CV?
+
+Answer: 
+with CV, the data is seperated into training and validation set, which means the training data used to generate the model is smaller than the original dataset, only a subset of the observations are used to fit the model 
+the test error from CV is highly variable, depends on which observations are included in the training set and which are included in the validation set
+the validation error may tend t overestimate the test error on the entire data set, given each training set is only a subset of the original training set 
+
+
+(d) What are the factors afecting the performance of CV?
+
+Answer: 
+the number of folds that we choose  
+the seperation of data: which observations are included in training and which are included in testing 
+
+
+## Question 3: 
+Fix lambda = 1, 25, 150. For each of these values, plot a learning curve for the algorithm using the dataset 1000-100.csv
+
+```{r}
+## prepare package 
+library(caret)
+
+# define features and responses
+x.train3 = model.matrix(y~.-1, data = train3)
+y.train3 = train3$y
+x.test3 = model.matrix(y~.-1, data = test3)
+y.test3 = test3$y
+
+# Run algorithms using 10-fold cross validation with 3 repeats
+trainControl <- trainControl(method="repeatedcv", number = 10, repeats = 3)
+metric <- "RMSE"
+```
+
+When lambda = 1
+```{r}
+# create empty data frame to store MSE
+learnCurve1 <- data.frame(m = integer(21), 
+                         trainRMSE = integer(21),
+                         testRMSE = integer(21))
+
+for (i in 3:21){
+  learnCurve1$m[i] <- i
+  
+  # train learning algorithm with size i
+  fit.ridge <- train(y~., data = train3[1:i,], method = "glmnet", metric = metric, lambda = 1, tuneGrid = expand.grid(alpha = 0, lambda = 1), trControl=trainControl)
+  learnCurve1$trainRMSE[i] <- fit.ridge$results$RMSE
+  
+  # use trained parameters to predict on test data
+  prediction <- predict(fit.ridge, newdata = x.test3)
+  rmse <- postResample(prediction, y.test3)
+  learnCurve1$cvRMSE[i] <- rmse[1]
+}
+
+```
+
+```{r}
+# plot learning curves of training set size vs. error measure
+# for training set and test set
+plot(log(learnCurve1$trainRMSE),type = "o",col = "red", xlab = "Training set size",
+     ylab = "Error (RMSE)", main = "Learning Curve")
+lines(log(learnCurve1$cvRMSE), type = "o", col = "blue")
+legend('topright', c("Train error", "Test error"), lty = c(1,1), lwd = c(2.5, 2.5),
+       col = c("red", "blue"))
+```
+
+With lambda = 25
+```{r}
+learnCurve25 <- data.frame(m = integer(21), 
+                         trainRMSE = integer(21),
+                         testRMSE = integer(21))
+
+for (i in 3:21){
+  learnCurve25$m[i] <- i
+  
+  # train learning algorithm with size i
+  fit.ridge <- train(y~., data = train3[1:i,], method = "glmnet", metric = metric, lambda = 25, tuneGrid = expand.grid(alpha = 0, lambda = 25), trControl=trainControl)
+  learnCurve25$trainRMSE[i] <- fit.ridge$results$RMSE
+  
+  # use trained parameters to predict on test data
+  prediction <- predict(fit.ridge, newdata = x.test3)
+  rmse <- postResample(prediction, y.test3)
+  learnCurve25$cvRMSE[i] <- rmse[1]
+}
+```
+
+```{r}
+# plot learning curves
+plot(log(learnCurve25$trainRMSE),type = "o",col = "red", xlab = "Training set size", ylab = "Error (RMSE)", main = "Learning Curve")
+lines(log(learnCurve25$cvRMSE), type = "o", col = "blue")
+legend('topright', c("Train error", "Test error"), lty = c(1,1), lwd = c(2.5, 2.5),
+       col = c("red", "blue"))
+
+```
+
+With lambda = 150
+```{r}
+learnCurve150 <- data.frame(m = integer(21), 
+                           trainRMSE = integer(21),
+                           testRMSE = integer(21))
+
+for (i in 3:21){
+  learnCurve150$m[i] <- i
+  
+  # train learning algorithm with size i
+  fit.ridge <- train(y~., data = train3[1:i,], method = "glmnet", metric = metric, lambda = 25, tuneGrid = expand.grid(alpha = 0, lambda = 25), trControl=trainControl)
+  learnCurve150$trainRMSE[i] <- fit.ridge$results$RMSE
+  
+  # use trained parameters to predict on test data
+  prediction <- predict(fit.ridge, newdata = x.test3)
+  rmse <- postResample(prediction, y.test3)
+  learnCurve150$cvRMSE[i] <- rmse[1]
+}
+```
+
+```{r}
+# plot learning curves
+plot(log(learnCurve150$trainRMSE),type = "o",col = "red", xlab = "Training set size",
+     ylab = "Error (RMSE)", main = "Learning Curve")
+lines(log(learnCurve150$cvRMSE), type = "o", col = "blue")
+legend('topright', c("Train error", "Test error"), lty = c(1,1), lwd = c(2.5, 2.5),
+       col = c("red", "blue"))
+
+```
+
+
+
+
