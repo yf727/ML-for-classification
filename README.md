@@ -1,6 +1,6 @@
 # Machine Learning models
 
-The models included in this note are: 
+The models implemented or demonstrated in this repo includes: 
 
 1. Naive Bayes
 2. K Nearest Neighbors
