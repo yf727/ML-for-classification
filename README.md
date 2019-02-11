@@ -1,6 +1,8 @@
 # Machine Learning and Data Mining Models
 
-This repo includes machine learning and data mining models I implemented in Python and R for CS5800, [CS6930](https://storm.cis.fordham.edu/~yzhao/fall2018/CS6930_syllabus.html), GR4058, and [CN229](http://cs229.stanford.edu/syllabus.html), with additional notes I found online. 
+This repo includes machine learning and data mining models I implemented in Python and R. 
+
+Most of the examples are for the two machine learning courses CS5800, [CN229](http://cs229.stanford.edu/syllabus.html) and two data mining courses [CS6930](https://storm.cis.fordham.edu/~yzhao/fall2018/CS6930_syllabus.html) and GR4058 I took. 
 
 
 ## Machine Learning 
