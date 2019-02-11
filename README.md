@@ -2,12 +2,12 @@
 
 This repo includes machine learning and data mining models I implemented in Python and R. 
 
-Most of the examples are for the two machine learning courses CS5800, [CN229](http://cs229.stanford.edu/syllabus.html) and two data mining courses [CS6930](https://storm.cis.fordham.edu/~yzhao/fall2018/CS6930_syllabus.html) and GR4058 I took. 
+Most of the examples are for the two machine learning courses CS5800, [CN229](http://cs229.stanford.edu/syllabus.html), and two data mining courses [CS6930](https://storm.cis.fordham.edu/~yzhao/fall2018/CS6930_syllabus.html) and GR4058 that I took. 
 
 
 ## Machine Learning 
 
-ML models implemented and demonstrated in this repo includes: 
+Models implemented and demonstrated in this repo includes: 
 
 1. Maximum Likelihood Estimator
 2. Naive Bayes (Maximum A Posterior)
@@ -22,7 +22,7 @@ ML models implemented and demonstrated in this repo includes:
 
 ## Data Mining 
 
-Models that are mainly for data mining includes:
+Models that are mainly used for big data mining includes:
 
 1. Apriori algorithm
 2. FP-tree
