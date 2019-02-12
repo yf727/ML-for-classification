@@ -31,18 +31,19 @@ Models that are mainly used for big data mining includes:
 
 ## References
 
-Stanford CN229: [Machine Learning](http://cs229.stanford.edu/syllabus.html), [Youtube](https://www.youtube.com/playlist?list=PLLssT5z_DsK-h9vYZkQkYNWcItqhlRJLN)
+* Stanford CN229: [Machine Learning](http://cs229.stanford.edu/syllabus.html), [Youtube](https://www.youtube.com/playlist?list=PLLssT5z_DsK-h9vYZkQkYNWcItqhlRJLN)
 
-Fordham [CS6930](https://storm.cis.fordham.edu/~yzhao/fall2018/CS6930_syllabus.html)
+* Stanford [Statistical Learning](https://lagunita.stanford.edu/courses/HumanitiesSciences/StatLearning/Winter2016/about)
 
-NYU/Bloomberg [Machine Learning](https://davidrosenberg.github.io/ml2018/#home), [Video](https://bloomberg.github.io/foml/#lectures)
+* Stanford CS246: [Mining Massive Dataset](http://web.stanford.edu/class/cs246/), [Youtube](https://www.youtube.com/playlist?list=PLLssT5z_DsK9JDLcT8T62VtzwyW9LNepV)
 
-CMU [Machine Learning](http://www.cs.cmu.edu/~tom/10701_sp11/lectures.shtml)
+* Fordham [CS6930](https://storm.cis.fordham.edu/~yzhao/fall2018/CS6930_syllabus.html)
 
-Columbia COMS4771[Machine Learning](http://www.cs.columbia.edu/~djhsu/coms4771-f18/)
+* NYU/Bloomberg [Machine Learning](https://davidrosenberg.github.io/ml2018/#home), [Video](https://bloomberg.github.io/foml/#lectures)
 
-Columbia W4995 [Applied Machine Learning](http://www.cs.columbia.edu/~amueller/comsw4995s18/syllabus/)
+* Columbia COMS4771 [Machine Learning](http://www.cs.columbia.edu/~djhsu/coms4771-f18/)
 
-Stanford [Statistical Learning](https://lagunita.stanford.edu/courses/HumanitiesSciences/StatLearning/Winter2016/about)
+* Columbia W4995 [Applied Machine Learning](http://www.cs.columbia.edu/~amueller/comsw4995s18/syllabus/)
 
-Stanford CS246: [Mining Massive Dataset](http://web.stanford.edu/class/cs246/), [Youtube](https://www.youtube.com/playlist?list=PLLssT5z_DsK9JDLcT8T62VtzwyW9LNepV)
+* CMU [Machine Learning](http://www.cs.cmu.edu/~tom/10701_sp11/lectures.shtml)
+
