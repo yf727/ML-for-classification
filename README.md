@@ -41,9 +41,13 @@ Models that are mainly used for big data mining includes:
 
 * NYU/Bloomberg [Machine Learning](https://davidrosenberg.github.io/ml2018/#home), [Video](https://bloomberg.github.io/foml/#lectures)
 
+* CMU 10701 [Introduction to Machine Learning](http://www.cs.cmu.edu/~10701/lectures.html)
+
+* CMU 15781 [Machine Learning](http://www.cs.cmu.edu/~tom/10701_sp11/lectures.shtml)
+
 * Columbia COMS4771 [Machine Learning](http://www.cs.columbia.edu/~djhsu/coms4771-f18/)
 
 * Columbia W4995 [Applied Machine Learning](http://www.cs.columbia.edu/~amueller/comsw4995s18/syllabus/)
 
-* CMU [Machine Learning](http://www.cs.cmu.edu/~tom/10701_sp11/lectures.shtml)
+
 
