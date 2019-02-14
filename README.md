@@ -49,5 +49,7 @@ Models that are mainly used for big data mining includes:
 
 * Columbia W4995 [Applied Machine Learning](http://www.cs.columbia.edu/~amueller/comsw4995s18/syllabus/)
 
+* Google [ML Crash Course](https://developers.google.com/machine-learning/crash-course/)
 
+* Andrew Ng [Machine Learning Yearning](https://gallery.mailchimp.com/dc3a7ef4d750c0abfc19202a3/files/704291d2-365e-45bf-a9f5-719959dfe415/Ng_MLY01.pdf)
 
